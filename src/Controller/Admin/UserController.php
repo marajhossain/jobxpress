@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Model\UserManager;
 
 /**
  * @Route("/admin/user")
@@ -18,10 +19,16 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserManager $userManager): Response
     {
+		if (empty($data = $userManager->getList())) {
+			$this->addFlash('warning', 'User is not available!');
+		} else {
+			$this->addFlash('success', 'User available!');
+		}
+
         return $this->render('admin/user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $data,
         ]);
     }
 
