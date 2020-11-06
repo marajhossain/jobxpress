@@ -56,28 +56,30 @@
 												<td>{{ '****' }}</td>
 												<td>{{ '' }}</td>
 												<td>
-													{% if user.type == 0 %}
+													{% if (user.type == 0) %}
 														Admin
-													{% elseif user.type == 1 %}
+													{% elseif (user.type == 1) %}
 														Job poster
 													{% else %}
 														User
 													{% endif %}
 												</td> 
 												<td>
-													{% if user.type == 1 %}
+													{% if (user.status == 1) %}
 														Active
 													{% else %}
 														Inactive
 													{% endif %}
 												</td>
 												<td>
-													<div class="form-group">
+													<a href="{{ path('user_edit', {'id': user.id}) }}" class="warning edit mr-1"><i class="la la-pencil"></i> </a> 
+													<a href="{{ path('user_show', {'id': user.id}) }}" class="success view mr-1"><i class="la la-folder-open"></i> </a> 
+													{# <div class="form-group">
 														<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
 															<a href="{{ path('user_show', {'id': user.id}) }}" type="button" class="btn btn-primary">Show</a>
 															<a href="{{ path('user_edit', {'id': user.id}) }}" type="button" class="btn btn-warning">Edit</a>
 														</div>
-													</div>
+													</div> #}
 												</td>
 											</tr>
 										{% else %}

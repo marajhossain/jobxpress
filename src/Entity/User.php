@@ -6,11 +6,18 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity("email",
+ *     message = "The email has already been taken."
+ * )
  */
-class User
+class User implements UserInterface
 {
 	 /**
      * @ORM\Id
@@ -21,16 +28,24 @@ class User
 
     /**
      * @ORM\Column(type="string", length=120, nullable=false)
+	 * @Assert\NotBlank
+	 * @Assert\Length(min=3)
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=120, unique=true, nullable=false)
+	 * @Assert\NotBlank
+	 * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      */
 	private $email;
 
 	/**
      * @ORM\Column(type="string", length=255, nullable=false)
+	 * @Assert\NotBlank
+	 * @Assert\Length(min=6)
      */
 	private $password;
 
@@ -183,7 +198,7 @@ class User
         return $this->edited_by;
     }
 
-    public function setEditedBy(int $edited_by): self
+    public function setEditedBy(?int $edited_by): ?self
     {
         $this->edited_by = $edited_by;
 
@@ -195,7 +210,7 @@ class User
         return $this->deleted_by;
     }
 
-    public function setDeletedBy(int $deleted_by): self
+    public function setDeletedBy(?int $deleted_by): ?self
     {
         $this->deleted_by = $deleted_by;
 
@@ -266,5 +281,54 @@ class User
         }
 
         return $this;
-    }
+	}
+	
+	 /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return ['ROLE_USER'];
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles() {
+		return ['USER_ROLE'];
+	}
+
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt() {
+
+	}
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername() {
+
+	}
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials() {
+
+	}
 }

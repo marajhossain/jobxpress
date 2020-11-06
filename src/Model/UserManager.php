@@ -1,6 +1,7 @@
 <?php
 namespace App\Model;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 
 class UserManager {
@@ -16,5 +17,10 @@ class UserManager {
 	public function getList()
 	{		
 		return $this->repository->findAll();
+	}
+
+	public function getById(int $id)
+	{		
+		return $this->repository->find($id);
 	}
 }
