@@ -1,11 +1,11 @@
 {% extends 'admin/layout.html.twig' %}
 
-{% block title %} User List {% endblock %}
-{% block pagename %} User List {% endblock %}
+{% block title %} Category List {% endblock %}
+{% block pagename %} Category List {% endblock %}
 
 {% block breadcrumb %} 
 	<li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Dashboard</a></li>
-	<li class="breadcrumb-item active"> User </li>
+	<li class="breadcrumb-item active">Category details</li>
 {% endblock %}
 
 {% block content %} 
@@ -15,7 +15,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a class="text-white" href="{{ path('user_new') }}">
+                            <a class="text-white" href="{{ path('category_new') }}">
                                 <button type="button" class="btn btn-round btn-sm btn-primary">
                                     <i class="ft-plus text-white">
                                     </i> Create New
@@ -36,58 +36,43 @@
                                 <div class="table-responsive">
                                     <table class="table display nowrap table-striped table-bordered alt-pagination"
                                            id="patient-table">
-										<thead>
-											<tr>
-												<th>Sl. No.</th>
-												<th>Name</th>
-												<th>Email</th>
-												<th>Password</th>
-												<th>Photo</th>
-												<th>User Type</th>
-												<th>Status</th>
-												<th>Action</th>
-											</tr>
-										</thead>
 										<tbody>
-										{% for user in users %}
 											<tr>
-												<td>{{ user.id }}</td>
-												<td>{{ user.name }}</td>
-												<td>{{ user.email }}</td>
-												<td>{{ '****' }}</td>
-												<td>{{ '' }}</td>
-												<td>
-													{% if (user.type == 0) %}
-														Admin
-													{% elseif (user.type == 1) %}
-														Job poster
-													{% else %}
-														User
-													{% endif %}
-												</td> 
-												<td>
-													{% if (user.status == 1) %}
-														Active
-													{% else %}
-														Inactive
-													{% endif %}
-												</td>
-												<td>
-													<a href="{{ path('user_edit', {'id': user.id}) }}" class="warning edit mr-1"><i class="la la-pencil"></i> </a> 
-													<a href="{{ path('user_show', {'id': user.id}) }}" class="success view mr-1"><i class="la la-folder-open"></i> </a> 
-													{# <div class="form-group">
-														<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-															<a href="{{ path('user_show', {'id': user.id}) }}" type="button" class="btn btn-primary">Show</a>
-															<a href="{{ path('user_edit', {'id': user.id}) }}" type="button" class="btn btn-warning">Edit</a>
-														</div>
-													</div> #}
-												</td>
+												<th>Id</th>
+												<td>{{ category.id }}</td>
 											</tr>
-										{% else %}
 											<tr>
-												<td colspan="14">No records found</td>
+												<th>Name</th>
+												<td>{{ category.name }}</td>
 											</tr>
-										{% endfor %}
+											<tr>
+												<th>Status</th>
+												<td>{{ category.status }}</td>
+											</tr>
+											<tr>
+												<th>Created_by</th>
+												<td>{{ category.createdBy }}</td>
+											</tr>
+											<tr>
+												<th>Edited_by</th>
+												<td>{{ category.editedBy }}</td>
+											</tr>
+											<tr>
+												<th>Deleted_by</th>
+												<td>{{ category.deletedBy }}</td>
+											</tr>
+											<tr>
+												<th>Created_at</th>
+												<td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+											</tr>
+											<tr>
+												<th>Edited_at</th>
+												<td>{{ category.editedAt ? category.editedAt|date('Y-m-d H:i:s') : '' }}</td>
+											</tr>
+											<tr>
+												<th>Deleted_at</th>
+												<td>{{ category.deletedAt ? category.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
