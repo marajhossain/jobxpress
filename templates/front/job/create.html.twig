@@ -1,0 +1,132 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block title %} Post a job {% endblock %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <style>
+    textarea.textarea-autosize.form-control-lg {
+        height: 25.75rem;
+        min-height: 25.75rem;
+    }
+
+    [type="file"] {
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute !important;
+        white-space: nowrap;
+        width: 1px;
+    }
+    </style>
+
+
+{% endblock %}
+
+{% block content %} 
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mb-5 mt-5">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="input-group input-group-lg mb-3">
+                                        <input type="text" class="form-control" placeholder="Search..." aria-label="Recipient's username" aria-describedby="button-addon">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-light btn-outline-secondary px-4" type="button" id="button-addon">Go!</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <a href="{{ path('post_job') }}" class="btn btn-primary btn-lg float-right px-4">Post a Job</a>
+                                </div>
+                            </div>
+
+                            <div class="row my-5">
+                                <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                    <form>
+                                        <div class="form-group row">
+                                            <h3 class="col-sm-6">Post A Job</h3>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputState" class="col-sm-2 col-form-label">Category</label>
+                                            <div class="col-sm-10">
+                                                <select id="inputState" class="form-control form-control-lg">
+                                                    <option selected>Choose...</option>
+                                                    <option>...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputCompany" class="col-sm-2 col-form-label">Company</label>
+                                            <div class="col-sm-10">
+                                            <input type="text" class="form-control form-control-lg" id="inputCompany">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputPosition" class="col-sm-2 col-form-label">Position</label>
+                                            <div class="col-sm-10">
+                                            <input type="text" class="form-control form-control-lg" id="inputPosition">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputLocation" class="col-sm-2 col-form-label">Location</label>
+                                            <div class="col-sm-10">
+                                            <input type="text" class="form-control form-control-lg" id="inputLocation">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+                                            <div class="col-sm-10">
+                                            <textarea rows="5" class="form-control textarea-autosize form-control-lg " id="inputDescription" placeholder="Enter description"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button type="button" class="btn btn-lg btn-secondary px-5">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-5 col-lg-5 text-center pt-5">
+                                    <img id="company-logo" src="https://i.ibb.co/ZVFsg37/default.png" class="mb-3" alt="your image" width="100%" />
+                                    <input id="file" type='file' onchange="loadImage(this);" />
+                                    <label for="file" class="btn btn-lg btn-secondary px-5">Select Logo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div> 
+{% endblock %}
+
+{% block javascripts %}
+	{{  parent()  }}
+    <script>
+
+    !function(t,e,i,n){function s(e,i){this.element=e,this.$element=t(e),this.init()}var h="textareaAutoSize",o="plugin_"+h,r=function(t){return t.replace(/\s/g,"").length>0};s.prototype={init:function(){var i=parseInt(this.$element.css("paddingBottom"))+parseInt(this.$element.css("paddingTop"))+parseInt(this.$element.css("borderTopWidth"))+parseInt(this.$element.css("borderBottomWidth"))||0;r(this.element.value)&&this.$element.height(this.element.scrollHeight-i),this.$element.on("input keyup",function(n){var s=t(e),h=s.scrollTop();t(this).height(0).height(this.scrollHeight-i),s.scrollTop(h)})}},t.fn[h]=function(e){return this.each(function(){t.data(this,o)||t.data(this,o,new s(this,e))}),this}}(jQuery,window,document);
+
+    // Initialize Textarea
+    $('.textarea-autosize').textareaAutoSize();
+
+    function loadImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#company-logo')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+{% endblock %}
