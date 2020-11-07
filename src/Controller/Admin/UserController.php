@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\EditUserType;
-//use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,7 +79,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
-    public function show(int $id, UserManager $userManager): Response
+    public function show($id, UserManager $userManager): Response
     {
 		$user = $userManager->getById($id);
 
@@ -116,7 +115,7 @@ class UserController extends AbstractController
             if (count($errors) > 0) {
                 $this->addFlash('warning', 'Provided data did not pass the validation !');
 
-                return $this->redirectToRoute('user_new');
+                return $this->redirectToRoute('user_edit');
             }
 
 			$user->setEditedBy(0);
