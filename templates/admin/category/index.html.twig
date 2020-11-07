@@ -1,0 +1,83 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %} Category List {% endblock %}
+{% block pagename %} Category List {% endblock %}
+
+{% block breadcrumb %} 
+	<li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Dashboard</a></li>
+	<li class="breadcrumb-item active">Category</li>
+{% endblock %}
+
+{% block content %} 
+	<div class="content-body">
+        <section id="pagination">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="text-white" href="{{ path('category_new') }}">
+                                <button type="button" class="btn btn-round btn-sm btn-primary">
+                                    <i class="ft-plus text-white">
+                                    </i> Create New
+                                </button>
+                            </a>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="btn-outline-warning ft-minus"></i></a></li>
+                                    <li><a data-action="reload"><i class="btn-outline-primary ft-rotate-cw"></i></a></li>
+                                    <li><a data-action="expand"><i class="btn-outline-success ft-maximize"></i></a></li>
+                                    <li><a data-action="close"><i class="btn-outline-danger ft-x"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body card-dashboard text-center">
+                                <div class="table-responsive">
+                                    <table class="table display nowrap table-striped table-bordered alt-pagination"
+                                           id="patient-table">
+										<thead>
+											<tr>
+												<th>Sl. No.</th>
+												<th>Name</th>
+												<th>Status</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for category in categories %}
+												<tr>
+													<td>{{ category.id }}</td>
+													<td>{{ category.name }}</td>
+													<td>
+														{% if (category.status == 1) %}															
+															<span class="badge badge badge-pill badge-success mr-2">Active</span>
+														{% else %}
+															<span class="badge badge badge-pill badge-danger mr-2">Inactive</span>
+														{% endif %}
+													</td>
+													<td>
+														<a href="{{ path('category_edit', {'id': category.id}) }}" class="warning edit mr-1"><i class="la la-pencil"></i> </a> 
+														<a href="{{ path('category_show', {'id': category.id}) }}" class="success view mr-1"><i class="la la-folder-open"></i> </a> 							
+													</td>
+												</tr>
+											{% else %}
+												<tr>
+													<td colspan="10">No records found</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>    
+{% endblock %}
+
+{% block javascripts %}
+	{{  parent()  }}
+{% endblock %}
