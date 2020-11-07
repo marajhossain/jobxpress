@@ -298,7 +298,8 @@ class User implements UserInterface
      * @return (Role|string)[] The user roles
      */
     public function getRoles() {
-		return ['USER_ROLE'];
+		
+		return ['ROLE_ADMIN'];
 	}
 
 
@@ -319,7 +320,7 @@ class User implements UserInterface
      * @return string The username
      */
     public function getUsername() {
-
+		return $this->email;
 	}
 
     /**
