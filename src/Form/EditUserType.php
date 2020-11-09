@@ -12,9 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class EditUserType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {		
-        $builder
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{		
+		$builder
 			->add('name', TextType::class, [
 				'required' => true,
 			])
@@ -42,13 +42,13 @@ class EditUserType extends AbstractType
 					'Inactive' => 0
 				]
 			])
-        ;
-    }
+		;
+	}
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults([
+			'data_class' => User::class,
+		]);
+	}
 }

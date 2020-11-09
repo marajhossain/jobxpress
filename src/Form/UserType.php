@@ -11,13 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('name')
-            ->add('email')
-            ->add('password', PasswordType::class)
-            ->add('profile_photo')
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$builder
+			->add('name')
+			->add('email')
+			->add('password', PasswordType::class)
+			->add('profile_photo')
 			->add('type', ChoiceType::class, [
 				'required' => true,
 				'placeholder' => 'Select User Type',
@@ -33,19 +33,19 @@ class UserType extends AbstractType
 					'Inactive'  => 0
 				]
 			])
-           // ->add('created_by')
-           // ->add('edited_by')
-           // ->add('deleted_by')
-           // ->add('created_at')
-           // ->add('edited_at')
-           // ->add('deleted_at')
-        ;
-    }
+		   // ->add('created_by')
+		   // ->add('edited_by')
+		   // ->add('deleted_by')
+		   // ->add('created_at')
+		   // ->add('edited_at')
+		   // ->add('deleted_at')
+		;
+	}
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults([
+			'data_class' => User::class,
+		]);
+	}
 }

@@ -10,9 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CategoryType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$builder
 			->add('name')
 			->add('status', ChoiceType::class, [
 				'required' => true,
@@ -21,19 +21,19 @@ class CategoryType extends AbstractType
 					'Inactive'  => 0
 				]
 			])
-            // ->add('created_by')
-            // ->add('edited_by')
-            // ->add('deleted_by')
-            // ->add('created_at')
-            // ->add('edited_at')
-            // ->add('deleted_at')
-        ;
-    }
+			// ->add('created_by')
+			// ->add('edited_by')
+			// ->add('deleted_by')
+			// ->add('created_at')
+			// ->add('edited_at')
+			// ->add('deleted_at')
+		;
+	}
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => Category::class,
-        ]);
-    }
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults([
+			'data_class' => Category::class,
+		]);
+	}
 }

@@ -16,26 +16,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CategoryController extends AbstractController
 {
-    /**
-     * @Route("/", name="category_index", methods={"GET"})
-     */
+	/**
+	 * @Route("/", name="category_index", methods={"GET"})
+	 */
 	public function index(CategoryManager $catManager): Response
-    {
-        return $this->render('admin/category/index.html.twig', [
-            'categories' => $catManager->getList()
-        ]);
-    }
+	{
+		return $this->render('admin/category/index.html.twig', [
+			'categories' => $catManager->getList()
+		]);
+	}
 
-    /**
-     * @Route("/new", name="category_new", methods={"GET","POST"})
-     */
-    public function new(Request $request, ValidatorInterface $validator): Response
-    {
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
+	/**
+	 * @Route("/new", name="category_new", methods={"GET","POST"})
+	 */
+	public function new(Request $request, ValidatorInterface $validator): Response
+	{
+		$category = new Category();
+		$form = $this->createForm(CategoryType::class, $category);
+		$form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 
 			$errors = $validator->validate($category);
 
@@ -52,24 +52,24 @@ class CategoryController extends AbstractController
 			$category->setEditedAt(null);
 			$category->setDeletedAt(null);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
+			$entityManager = $this->getDoctrine()->getManager();
+			$entityManager->persist($category);
+			$entityManager->flush();
 
-            return $this->redirectToRoute('category_index');
-        }
+			return $this->redirectToRoute('category_index');
+		}
 
-        return $this->render('admin/category/new.html.twig', [
-            'category' => $category,
-            'form' => $form->createView(),
-        ]);
-    }
+		return $this->render('admin/category/new.html.twig', [
+			'category' => $category,
+			'form' => $form->createView(),
+		]);
+	}
 
-    /**
-     * @Route("/{id}", name="category_show", methods={"GET"})
-     */
-    public function show($id, CategoryManager $catManager): Response
-    {
+	/**
+	 * @Route("/{id}", name="category_show", methods={"GET"})
+	 */
+	public function show($id, CategoryManager $catManager): Response
+	{
 		$category = $catManager->getById($id);
 
 		if (empty($category) > 0) {
@@ -78,33 +78,33 @@ class CategoryController extends AbstractController
 			return $this->redirectToRoute('category_index');	
 		}
 
-        return $this->render('admin/category/show.html.twig', [
-            'category' => $category,
+		return $this->render('admin/category/show.html.twig', [
+			'category' => $category,
 		]);
-    }
+	}
 
-    /**
-     * @Route("/{id}/edit", name="category_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Category $category, ValidatorInterface $validator): Response
-    {
+	/**
+	 * @Route("/{id}/edit", name="category_edit", methods={"GET","POST"})
+	 */
+	public function edit(Request $request, Category $category, ValidatorInterface $validator): Response
+	{
 		if (empty($category) > 0) {
-            $this->addFlash('warning', 'No data available !');
+			$this->addFlash('warning', 'No data available !');
 
-            return $this->redirectToRoute('category_index');
+			return $this->redirectToRoute('category_index');
 		}
 		
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
+		$form = $this->createForm(CategoryType::class, $category);
+		$form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 
 			$errors = $validator->validate($category);
 
-            if (count($errors) > 0) {
-                $this->addFlash('warning', 'Provided data did not pass the validation !');
+			if (count($errors) > 0) {
+				$this->addFlash('warning', 'Provided data did not pass the validation !');
 
-                return $this->redirectToRoute('category_new');
+				return $this->redirectToRoute('category_new');
 			}
 			
 			$category->setEditedBy(0);
@@ -114,26 +114,26 @@ class CategoryController extends AbstractController
 
 			$this->addFlash('success', 'Category has been updated successfully !');
 
-            return $this->redirectToRoute('category_index');
-        }
+			return $this->redirectToRoute('category_index');
+		}
 
-        return $this->render('admin/category/edit.html.twig', [
-            'category' => $category,
-            'form' => $form->createView(),
-        ]);
-    }
+		return $this->render('admin/category/edit.html.twig', [
+			'category' => $category,
+			'form' => $form->createView(),
+		]);
+	}
 
-    /**
-     * @Route("/{id}", name="category_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Category $category): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($category);
-            $entityManager->flush();
-        }
+	/**
+	 * @Route("/{id}", name="category_delete", methods={"DELETE"})
+	 */
+	public function delete(Request $request, Category $category): Response
+	{
+		if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+			$entityManager = $this->getDoctrine()->getManager();
+			$entityManager->remove($category);
+			$entityManager->flush();
+		}
 
-        return $this->redirectToRoute('category_index');
-    }
+		return $this->redirectToRoute('category_index');
+	}
 }
