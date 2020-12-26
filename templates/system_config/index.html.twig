@@ -1,0 +1,44 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Job Express::SystemConfig{% endblock %}
+
+{% block body %}
+    <div class="col-md-6">
+        <h1 class="text-info">SystemConfig List</h1>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ path('system_config_new') }}" class="btn btn-default btn-warning float-right"> <i class="fa fa-plus"></i> Create new</a>
+    </div>
+    <table class="table table-hover table-bordered">
+        <thead class="bg-success">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Config_name</th>
+                <th>Config_value</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for system_config in system_configs %}
+            <tr>
+                <td>{{ system_config.id }}</td>
+                <td>{{ system_config.name }}</td>
+                <td>{{ system_config.configName }}</td>
+                <td>{{ system_config.configValue }}</td>
+                <td>
+                    <a href="{{ path('system_config_show', {'id': system_config.id}) }}" class="text-info"> <i class="fa fa-eye"></i> show</a> |
+                    <a href="{{ path('system_config_edit', {'id': system_config.id}) }}" class="text-warning"> <i class="fa fa-edit"></i> edit</a> 
+                    {% if is_granted('ROLE_ADMIN') %}
+                       | <a href="{{ path('system_config_edit', {'id': system_config.id}) }}" class="text-danger"> <i class="fa fa-trash"></i> delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
