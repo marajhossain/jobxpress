@@ -1,0 +1,78 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block title %} Job Details {% endblock %}
+
+{% block content %} 
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mb-3 mt-5">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="input-group input-group-lg mb-3">
+                                        <input type="text" class="form-control" placeholder="Search..." aria-label="Recipient's username" aria-describedby="button-addon">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-light btn-outline-secondary px-4" type="button" id="button-addon">Go!</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <a href="{{ path('post_job') }}" class="btn btn-primary btn-lg float-right px-4">Post a Job</a>
+                                </div>
+                            </div>
+
+                            <!--Show job details-->
+                            <div class="row mt-5">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <h2>Senior Software Engineer</h2>
+                                    <h4>Dhaka, Bangladesh</h4>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <img src="http://139.162.46.6/wp-content/uploads/2018/10/logo.jpg" style="width: 220px;" class="float-right"/>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                    <ul>
+                                        <li>Lorem ipsum dolor sit amet</li>
+                                        <li>Consectetur adipiscing elit</li>
+                                        <li>Integer molestie lorem at massa</li>
+                                        <li>Facilisis in pretium nisl aliquet</li>
+                                        <li>Nulla volutpat aliquam velit
+                                            <ul>
+                                            <li>Phasellus iaculis neque</li>
+                                            <li>Purus sodales ultricies</li>
+                                            <li>Vestibulum laoreet porttitor sem</li>
+                                            <li>Ac tristique libero volutpat at</li>
+                                            </ul>
+                                        </li>
+                                        <li>Faucibus porta lacus fringilla vel</li>
+                                        <li>Aenean sit amet erat nunc</li>
+                                        <li>Eget porttitor lorem</li>
+                                        </ul>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-5 col-lg-5 bg-light border">
+                                    sfadfasf
+                                </div>   
+                            </div>
+                            <hr>
+                            <div class="row my-5">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <a href="#" class="btn btn-primary btn-lg px-4">Apply Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div> 
+{% endblock %}
+
+{% block javascripts %}
+	{{  parent()  }}
+{% endblock %}
