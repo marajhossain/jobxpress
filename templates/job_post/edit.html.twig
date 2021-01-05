@@ -3,11 +3,12 @@
 {% block title %}Edit JobPost{% endblock %}
 
 {% block body %}
-    <h1>Edit JobPost</h1>
+    <div class="col-lg-12">
+        <h1 class="page-header">Edit Job Post</h1>
+    </div>
 
     {{ include('job_post/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('job_post_index') }}">back to list</a>
-
-    {{ include('job_post/_delete_form.html.twig') }}
+    <a href="{{ path('job_post_index') }}" class="text-danger"> <i class="fa fa-arrow-left"></i> back to list</a>
+    
 {% endblock %}

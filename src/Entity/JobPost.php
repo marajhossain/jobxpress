@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\JobPostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=JobPostRepository::class)
+ * @ORM\Entity(repositoryClass=App\Repository\JobPostRepository::class)
  */
 class JobPost
 {
@@ -25,6 +25,9 @@ class JobPost
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank
+     * 
      */
     private $company_name;
 
@@ -72,6 +75,16 @@ class JobPost
      * @ORM\Column(type="string", length=15)
      */
     private $status;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $job_posting_time;
 
     public function getId(): ?int
     {
@@ -206,6 +219,30 @@ class JobPost
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getJobPostingTime(): ?int
+    {
+        return $this->job_posting_time;
+    }
+
+    public function setJobPostingTime(int $job_posting_time): self
+    {
+        $this->job_posting_time = $job_posting_time;
 
         return $this;
     }

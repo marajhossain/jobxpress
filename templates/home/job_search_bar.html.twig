@@ -1,0 +1,13 @@
+<div class="col-md-12">
+    <div class="pull-left">
+        <form class="example" action="{{ path('job_search') }}" method="POST">
+            <input type="text" placeholder="Search.." name="search_keyword" class="form-controll">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    
+    <div class="pull-right">
+        <a href="{{ path("new_job") }}" class="btn btn-primary pull-right">Post a Job</a>   
+    </div>
+</div>
+<div class="col-md-12"><br /></div>

@@ -67,6 +67,7 @@ class CategoryController extends AbstractController
     {
         return $this->render('category/show.html.twig', [
             'category' => $category,
+            'getStatus' => $this->system_config->getStatus(),
         ]);
     }
 

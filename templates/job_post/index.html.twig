@@ -3,21 +3,27 @@
 {% block title %}Job Express::JobPost{% endblock %}
 
 {% block body %}
-    <div class="col-md-6">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Job List
+            <a href="{{ path('job_post_new') }}" class="btn btn-default btn-warning pull-right "> <i class="fa fa-plus"></i> Create new</a>
+        </h1>
+    </div>
+    {# <div class="col-md-6">
         <h1 class="text-info">Job List</h1>
     </div>
     <div class="col-md-6">
         <a href="{{ path('job_post_new') }}" class="btn btn-default btn-warning float-right"> <i class="fa fa-plus"></i> Create new</a>
-    </div>
+    </div> #}
     <table class="table table-hover table-bordered">
         <thead class="bg-success">
             <tr>
                 <th rowspan="2">Id</th>
+                <th rowspan="2">Category</th>
                 <th rowspan="2">Company Name</th>
                 <th rowspan="2">Type</th>
                 <th rowspan="2">Position</th>
                 <th rowspan="2">Location</th>
-                <th rowspan="2">Description</th>
                 <th rowspan="2">Logo</th>
                 <th colspan="2" class="text-center">Total</th>
                 <th rowspan="2">Poster Email</th>
@@ -33,16 +39,16 @@
         {% for job_post in job_posts %}
             <tr>
                 <td>{{ job_post.id }}</td>
+                <td>{{ job_post.category.name }}</td>
                 <td>{{ job_post.companyName }}</td>
-                <td>{{ job_post.type }}</td>
+                <td>{{ getJobType[job_post.type] }}</td>
                 <td>{{ job_post.position }}</td>
                 <td>{{ job_post.location }}</td>
-                <td>{{ job_post.description }}</td>
                 <td>{{ job_post.logo }}</td>
                 <td>{{ job_post.totalApplied }}</td>
                 <td>{{ job_post.totalView }}</td>
                 <td>{{ job_post.posterEmail }}</td>
-                <td>{{ job_post.status }}</td>
+                <td>{{ getStatus[job_post.status] }}</td>
                 <td>
                     <a href="{{ path('job_post_show', {'id': job_post.id}) }}" class="text-info"> <i class="fa fa-eye"></i> show</a> |
                     <a href="{{ path('job_post_edit', {'id': job_post.id}) }}" class="text-warning"> <i class="fa fa-edit"></i> edit</a> 
@@ -58,4 +64,8 @@
         {% endfor %}
         </tbody>
     </table>
+    <h1>Total ({{ job_posts.getTotalItemCount }})</h1>
+    <div class="navigation">
+        {{ knp_pagination_render(job_posts) }}
+    </div>
 {% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Job Details{% endblock %}
+
+{% block body %}
+
+{% include '/home/job_search_bar.html.twig' %}
+
+    <div class="col-md-12">
+        <div class="example-wrapper">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 >{{ detail.position }} <br /> <small class="text-muted">{{ detail.location }}</small></h5>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="mb-4 d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Logo</span>
+                    </h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 order-md-1">
+                    <hr class="mb-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="">
+                                {{ detail.description|nl2br  }}    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="border border-light p-3 mb-4">
+        <div class="text-center">
+            <form class="example" method="POST">
+                {# <input type="email" placeholder="Enter your email address" name="email_address" required="required" /> #}
+                <button type="button" class="bg-primary">Apply</button>
+            </form>
+
+        </div>
+    </div>
+
+    <a href="{{ path('home_index') }}" class="text-danger"> <i class="fa fa-arrow-left"></i> back</a>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Job Create!{% endblock %}
+
+{% block body %}
+
+<div class="col-md-12">
+    <h1 class="h3 mb-3 font-weight-normal">Post a new job</h1>
+    <form method="post" enctype="multipart/form-data">
+        <table class="table">
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label class="required" for="job_post_category">Category: </label>
+                        <select id="job_post_category" name="job_post[category]" class="form-control">
+                            <option value="1">Programmer</option><option value="2">UI/UX</option><option value="3">Graphics Designer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="job_post_company_name" class="required">Company name</label>
+                        <input type="text" id="job_post_company_name" name="job_post[company_name]" required="required" maxlength="255" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required" for="job_post_type">Type</label>
+                        <select id="job_post_type" name="job_post[type]" class="form-control">
+                            <option value="1">Full-time</option><option value="2">Part-time</option><option value="3">Freelance</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job_post_position" class="required">Position</label>
+                        <input type="text" id="job_post_position" name="job_post[position]" required="required" maxlength="100" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="job_post_location" class="required">Location</label>
+                        <input type="text" id="job_post_location" name="job_post[location]" required="required" maxlength="255" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="job_post_description" class="required">Description</label>
+                        <textarea id="job_post_description" name="job_post[description]" class="form-control"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="job_post_logo" class="required">Logo</label>
+                        <input type="file" id="job_post_logo" name="job_post[logo]" class="form-control">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+        
+        <a href="{{ path('home_index') }}"> Back to home </a>
+        
+        <button class="btn btn-lg btn-primary float-right" type="submit"> View Job </button>
+        
+    </form>
+</div>
+
+
+    
+
+    {# <form method="post" enctype="multipart/form-data"  class="form-vartical">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h1 class="h3 mb-3 font-weight-normal">Post a new job</h1>
+            
+            <div class="form-group">
+                <label class="required" for="job_post_category">Category: </label>
+                <select id="job_post_category" name="job_post[category]" class="form-control">
+                    <option value="1">Programmer</option><option value="2">UI/UX</option><option value="3">Graphics Designer</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="job_post_company_name" class="required">Company name</label>
+                <input type="text" id="job_post_company_name" name="job_post[company_name]" required="required" maxlength="255" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="job_post_type">Type</label>
+                <select id="job_post_type" name="job_post[type]" class="form-control">
+                    <option value="1">Full-time</option><option value="2">Part-time</option><option value="3">Freelance</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="job_post_position" class="required">Position</label>
+                <input type="text" id="job_post_position" name="job_post[position]" required="required" maxlength="100" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="job_post_location" class="required">Location</label>
+                <input type="text" id="job_post_location" name="job_post[location]" required="required" maxlength="255" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="job_post_description" class="required">Description</label>
+                <textarea id="job_post_description" name="job_post[description]" required="required" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="job_post_logo" class="required">Logo</label>
+                <input type="file" id="job_post_logo" name="job_post[logo]" required="required" class="form-control">
+            </div>
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+        <a href="{{ path('home') }}"> Back to home </a>
+        <button class="btn btn-lg btn-primary float-right" type="submit"> View Job </button>
+    </form> #}
+{% endblock %}

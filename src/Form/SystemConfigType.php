@@ -6,6 +6,7 @@ use App\Entity\SystemConfig;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class SystemConfigType extends AbstractType
 {
@@ -15,6 +16,7 @@ class SystemConfigType extends AbstractType
             ->add('name')
             ->add('config_name')
             ->add('config_value')
+            ->add('description', TextareaType::class)
         ;
     }
 

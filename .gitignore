@@ -1,0 +1,9 @@
+.idea/
+vendor/
+var/
+phpunit.xml
+composer.lock
+.htaccess
+.env
+public/uploads/
+symfony_job_express.sql

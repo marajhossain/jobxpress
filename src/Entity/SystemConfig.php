@@ -32,6 +32,11 @@ class SystemConfig
      */
     private $config_value;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class SystemConfig
     public function setConfigValue(string $config_value): self
     {
         $this->config_value = $config_value;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
