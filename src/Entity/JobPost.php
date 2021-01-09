@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -85,6 +87,16 @@ class JobPost
      * @ORM\Column(type="integer")
      */
     private $job_posting_time;
+
+    /**
+     * @ORM\OneToMany(targetEntity=JobApply::class, mappedBy="job_post")
+     */
+    private $jobApplies;
+
+    public function __construct()
+    {
+        $this->jobApplies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -243,6 +255,36 @@ class JobPost
     public function setJobPostingTime(int $job_posting_time): self
     {
         $this->job_posting_time = $job_posting_time;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|JobApply[]
+     */
+    public function getJobApplies(): Collection
+    {
+        return $this->jobApplies;
+    }
+
+    public function addJobApply(JobApply $jobApply): self
+    {
+        if (!$this->jobApplies->contains($jobApply)) {
+            $this->jobApplies[] = $jobApply;
+            $jobApply->setJobPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJobApply(JobApply $jobApply): self
+    {
+        if ($this->jobApplies->removeElement($jobApply)) {
+            // set the owning side to null (unless already changed)
+            if ($jobApply->getJobPost() === $this) {
+                $jobApply->setJobPost(null);
+            }
+        }
 
         return $this;
     }

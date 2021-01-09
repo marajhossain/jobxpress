@@ -2,23 +2,40 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
+use App\Entity\JobApply;
 use App\Repository\CategoryRepository;
 use App\Entity\JobPost;
+use App\Form\JobApplyType;
 use App\Repository\JobPostRepository;
 use App\Form\JobPostType;
+use App\Model\HomeManager;
+use App\Model\JobPostManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-// use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class HomeController extends AbstractController
 {
+    private $homeManager;
+    private $jobPostManager;
+    private $uploadDir;
+
+    public function __construct
+    (
+        HomeManager $homeManager,
+        JobPostManager $jobPostManager,
+        $uploadDir
+    ) {
+        $this->homeManager = $homeManager;
+        $this->jobPostManager = $jobPostManager;
+        $this->uploadDir = $uploadDir;
+    }
+
     /**
      * @Route("/home", name="home_index")
      */
@@ -96,7 +113,7 @@ class HomeController extends AbstractController
      */
     public function jobDetails(JobPostRepository $jobPostRepository, JobPost $jobPost, Request $request)
     {
-        $jobDetails = $jobPostRepository->find($request->get('id'));
+        $jobDetails = $this->homeManager->getJobById($request->get('id'));
 
         $cookie = Cookie::create("Job_".$jobDetails->getId(), $jobDetails->getToken(),$jobDetails->getJobPostingTime() + 3600 * 24 * 30);
         
@@ -136,9 +153,86 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($request);
+            
+            $logoFile = $form->get('logo')->getData();
+
+            if ($logoFile) {
+                $originalFilename = pathinfo($logoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = strtolower(str_replace(' ', '-', $originalFilename)) . '-' . uniqid().'.'.$logoFile->guessExtension();
+
+                try {
+                    $logoFile->move(
+                        $this->uploadDir,
+                        $newFilename
+                    );
+
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                $jobPost->setLogo($newFilename);
+
+            }
+
+            $jobPost->setStatus(1);
+
+            $this->jobPostManager->create($jobPost);
+            
+            return $this->redirectToRoute('new_job');
+
         }
         
-        return $this->render('home/job_new.html.twig',['info'=>null]);
+        return $this->render('home/job_new.html.twig',[
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/job-apply", name="job_apply", methods={"GET", "POST"})
+     */
+    public function jobApply(Request $request)
+    {
+        $jobApply = new JobApply();
+        $form = $this->createForm(JobApplyType::class, $jobApply);
+        $form->handleRequest($request);
+
+        $jobDetails = $this->homeManager->getJobById($request->get('id'));
+        
+        // dd($jobApply->getJob($jobDetails->getId()));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $resumeFile = $form->get('resume')->getData();
+
+            if ($resumeFile) {
+                $originalFilename = pathinfo($resumeFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = strtolower(str_replace(' ', '-', $originalFilename)) . '-' . uniqid().'.'.$resumeFile->guessExtension();
+
+                try {
+                    $resumeFile->move(
+                        $this->uploadDir.'/resume/',
+                        $newFilename
+                    );
+
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                $jobApply->setResume($newFilename);
+
+            }
+
+            // $jobId = $request->get('id');
+            $jobApply->setJob($jobDetails->getId());
+
+            $this->homeManager->jobAppliy($jobApply);
+            
+            return $this->redirectToRoute('home_index');
+        }
+        
+        
+        
+        return $this->render('home/job_apply.html.twig',[
+            'form' => $form->createView(),
+            'jobDetails' => $jobDetails
+        ]);
     }
 }

@@ -81,6 +81,8 @@ class JobPostController extends AbstractController
                 $jobPost->setLogo($newFilename);
             }
 
+            $jobPost->setStatus(1);
+
             $this->jobPostManager->create($jobPost);
             
             return $this->redirectToRoute('job_post_index');

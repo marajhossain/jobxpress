@@ -37,14 +37,14 @@
 
     <div class="border border-light p-3 mb-4">
         <div class="text-center">
-            <form class="example" method="POST">
-                {# <input type="email" placeholder="Enter your email address" name="email_address" required="required" /> #}
-                <button type="button" class="bg-primary">Apply</button>
+            <form class="example" method="POST" action="{{ path("job_apply") }}">
+                <input type="hidden" name="id" value={{ detail.id }} required="required" />
+                <button type="submit" class="btn bg-primary">Apply</button>
             </form>
 
         </div>
     </div>
 
-    <a href="{{ path('home_index') }}" class="text-danger"> <i class="fa fa-arrow-left"></i> back</a>
+    <a href="{{ path('jobs', {'id': detail.category.id}) }}" class="text-danger"> <i class="fa fa-arrow-left"></i> back</a>
 
 {% endblock %}

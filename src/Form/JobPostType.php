@@ -18,37 +18,38 @@ class JobPostType extends AbstractType
     {
         $config = new SystemConfigHelper();
         $builder
-            ->add('category')
             ->add('company_name', TextType::class, [
                 'required' => true,
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => array_flip($config->getJobType())
             ])
+            ->add('logo', FileType::class, [
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                   new File([
+                       'maxSize' => '1024k',
+                       'mimeTypes' => [
+                           'image/jpeg',
+                           'image/png',
+                       ],
+                       'mimeTypesMessage' => 'Please upload a valid Image',
+                   ])
+               ],
+           ])
             ->add('position')
             ->add('location')
+            ->add('category')
             ->add('description')
-            ->add('logo', FileType::class, [
-                 // unmapped means that this field is not associated to any entity property
-                 'mapped' => false,
-                 'required' => false,
-                 'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid Image',
-                    ])
-                ],
-            ])
+            
             // ->add('total_applied')
             // ->add('total_view')
-            // ->add('poster_email')
-            ->add('status', ChoiceType::class, [
-                'choices' => array_flip($config->getStatus())
-            ])
+            ->add('poster_email')
+            // ->add('status', ChoiceType::class, [
+            //     'choices' => array_flip($config->getStatus())
+            // ])
             
         ;
     }
